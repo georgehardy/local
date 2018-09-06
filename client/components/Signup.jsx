@@ -1,50 +1,64 @@
 import React from 'react'
 
 import request from 'superagent'
+import MapTest from './MapTest'
 
 export default class Signup extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      unit: '',
-      address: '',
-      suburb: '',
-      city: '',
-      postcode: '',
-      matches: [],
 
+      org: '',
+      address: '',
+      matches: [],
+      selection: '',
+      coords: {},
+      ready: false
     }
   }
 
   handleChange = (e) => {
+    e.preventDefault()
     this.setState({
       [e.target.name]: e.target.value
     })
     e.target.name == 'address' && this.checkAddy()
-    console.log('wat')
   }
 
   handleClick = (address) => {
-    console.log('matched to ', address.a)
+    this.getCoords(address.a)
   }
-
 
   checkAddy () {
     if (this.state.address.length > 1) {
     request
     .get('https://www.addy.co.nz/api/search?s=' + this.state.address)
     .set('addy-api-key', 'ab4da45e1bc44013a86556b00eefb289')
-    //.set('Access-Control-Allow-Origin', '*')
     .then(res => {
       this.setState({matches: res.body.addresses})
     })
   }
   }
 
-  render () {
+  getCoords (selection) {
+    console.log(selection)
+    const reqString = 'http://www.mapquestapi.com/geocoding/v1/address?key=DRKly60NLBpFkRjJHCNTAFdbFAKMmqOO&location="' + selection + ',New Zealand"'
+    console.log(reqString)
+    request
+    .get(reqString)
+    .then(res => {
+      this.setState({
+        coords: res.body.results[0].locations[0].latLng,
+        selection,
+        ready: true
+      })
+    })
+  }
+
+  renderAutoComplete () {
     return (
       <div>
-        <h2>Registration</h2>
+        <p>Business/Organisation name: <input name='org' onChange={this.handleChange} /></p>
         <p>Address: <input name='address' onChange={this.handleChange} /></p>
         <ul>{
             this.state.matches.map(x => {
@@ -52,6 +66,17 @@ export default class Signup extends React.Component {
           })
         }
         </ul>
+      </div>
+    )
+  }
+
+  render () {
+    return (
+      <div>
+        <h2>Registration</h2>
+        {!this.state.selection && this.renderAutoComplete()}
+
+        {this.state.selection && <MapTest coords={this.state.coords}/>}
         <button>Submit</button>
       </div>
     )

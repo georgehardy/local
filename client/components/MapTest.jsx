@@ -3,29 +3,22 @@ import { Map, TileLayer, Marker, Popup } from 'react-leaflet'
 import request from 'superagent'
 
 export default class MapTest extends Component {
-  constructor (props) {
-  super(props)
-  this.state = {
-    lat: 51.505,
-    lng: -0.09,
-    zoom: 13,
-  }
-}
-
   render() {
-    const position = [this.state.lat, this.state.lng]
+    const position = [this.props.coords.lat, this.props.coords.lng]
     return (
-      <Map center={position} zoom={this.state.zoom}>
+      <div>
+      <Map center={position} zoom={18}>
         <TileLayer
           attribution="&amp;copy <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
         <Marker position={position}>
-          <Popup>
-            A pretty CSS3 popup. <br /> Easily customizable.
-          </Popup>
+          {/* <Popup>
+            Text
+          </Popup> */}
         </Marker>
       </Map>
+      </div>
     )
   }
 }
