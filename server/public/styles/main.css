@@ -1,4 +1,18 @@
-.leaflet-container {
+#regmap .leaflet-container {
   height: 400px;
+  width: 100%;
+}
+
+#reg-container {
+  text-align: center;
+  font-size: 3rem;
+}
+
+#reg-container input {
+  font-size: 5rem;
   width: 80%;
+  text-align: center;
+}
+
+#reg-form {
 }
