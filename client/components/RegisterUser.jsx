@@ -53,6 +53,7 @@ export default class RegisterUser extends React.Component {
   render () {
     return (
       <div id='reg-user'>
+        <h3>[RegisterUser]</h3>
         <div id='reg-user-form'>
           <label>First Name</label><br /><input name='firstName' onChange={this.handleChange} /> <br />
           <label>Last Name</label><br /><input name='lastName' onChange={this.handleChange} /> <br />
