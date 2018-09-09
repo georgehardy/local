@@ -3,6 +3,8 @@ import React from 'react'
 
 // import * as apiRegister from '../apiRegister'
 import RegisterUser from './RegisterUser'
+import RegisterOrg from './RegisterOrg'
+
 
 export default class Register extends React.Component {
   constructor (props) {

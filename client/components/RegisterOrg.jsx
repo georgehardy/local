@@ -1,13 +1,14 @@
 import React from 'react'
 
 import request from 'superagent'
-import MapTest from './MapTest'
 
-export default class Signup extends React.Component {
+import * as apiRegister from '../apiRegister'
+import RegistrationMap from './RegistrationMap'
+
+export default class RegisterOrg extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-
       org: '',
       address: '',
       matches: [],
@@ -55,16 +56,25 @@ export default class Signup extends React.Component {
     })
   }
 
+  renderStageOne () {
+    return (
+      <h1></h1>
+    )
+  }
+
   renderAutoComplete () {
     return (
       <div>
-        <p>Business/Organisation name: <input name='org' onChange={this.handleChange} /></p>
-        <p>Address: <input name='address' onChange={this.handleChange} /></p>
-        <ul>{
-            this.state.matches.map(x => {
-              return <li key={x.id}><a href='#' onClick={() => this.handleClick(x)}>{x.a}</a></li>
-          })
-        }
+        Business/Organisation name: <br />
+        <input name='org' onChange={this.handleChange} /> <br />
+        Address: <br />
+        <input name='address' autoComplete='off' onChange={this.handleChange} />
+        <ul>
+          {
+              this.state.matches.map(x => {
+                return <li key={x.id}><a href='#' onClick={() => this.handleClick(x)}>{x.a}</a></li>
+            })
+          }
         </ul>
       </div>
     )
@@ -72,12 +82,15 @@ export default class Signup extends React.Component {
 
   render () {
     return (
-      <div>
+      <div id='reg-container'>
+        <h3>[RegisterOrg]</h3>
+        <div id='reg-form'>
         <h2>Registration</h2>
         {!this.state.selection && this.renderAutoComplete()}
 
-        {this.state.selection && <MapTest coords={this.state.coords}/>}
+        {this.state.selection && <RegistrationMap coords={this.state.coords}/>}
         <button>Submit</button>
+        </div>
       </div>
     )
   }
