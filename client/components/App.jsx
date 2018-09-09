@@ -1,12 +1,12 @@
 import React from 'react'
-import {HashRouter as Router, Route} from 'react-router-dom'
-import Signup from './Signup'
+// import {HashRouter as Router, Route} from 'react-router-dom'
+import Register from './Register'
 
 const App = props => {
   return (
     <div>
-      <h1>LOCAL</h1>
-      <Signup />
+      <h1>[App]</h1>
+      <Register />
     </div>
   )
 }
