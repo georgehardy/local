@@ -19,7 +19,6 @@ export function addOrg (org, userId) {
     org,
     userId
   }
-  console.log(data)
   return request
     .post(rootUrl + '/addOrg')
     .send(data)
