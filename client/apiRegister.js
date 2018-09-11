@@ -6,12 +6,29 @@ export function addUser (user) {
   return request
     .post(rootUrl + '/addUser')
     .send({user})
-      .then(res => {
-        return {
-          success: res.status == 201 ? true : false,
-          message: res.body
-        }
-      })
+    .then(res => {
+      return {
+        success: res.status == 201,
+        message: res.body
+      }
+    })
+}
+
+export function addOrg (org, userId) {
+  const data = {
+    org,
+    userId
+  }
+  console.log(data)
+  return request
+    .post(rootUrl + '/addOrg')
+    .send(data)
+    .then(res => {
+      return {
+        success: res.status == 201,
+        message: res.body
+      }
+    })
 }
 
 export function getUser (id) {
@@ -20,11 +37,4 @@ export function getUser (id) {
     .then(res => {
       return res.body.user
     })
-}
-
-export function registerUser (userData) {
-  request
-    .post(rootUrl + '/users')
-    .send(userData)
-    .end()
 }
