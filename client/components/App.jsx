@@ -1,12 +1,11 @@
 import React from 'react'
 // import {HashRouter as Router, Route} from 'react-router-dom'
-import Register from './Register'
+import Home from './Home'
 
 const App = props => {
   return (
     <div>
-      <h1>[App]</h1>
-      <Register />
+      <Home />
     </div>
   )
 }
