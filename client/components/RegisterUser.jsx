@@ -1,7 +1,7 @@
 import React from 'react'
 import {pick as _pick, clone as _clone} from 'lodash';
 
-import * as apiRegister from '../apiRegister'
+import {addUser} from '../apiRegister'
 
 export default class RegisterUser extends React.Component {
   constructor (props) {
@@ -12,7 +12,8 @@ export default class RegisterUser extends React.Component {
       email: '',
       password: '',
       passwordConfirm: '',
-      errors: []
+      errors: [],
+      errorList: {}
     }
   }
 
@@ -27,22 +28,25 @@ export default class RegisterUser extends React.Component {
 
   validateForm = () => {
     const user = _pick(_clone(this.state), ['firstName', 'lastName', 'email', 'password'])
-    const errors = []
+    const errorList = {}
+    user.firstName.length < 1 && (errorList.firstName = 'You must enter your first name.')
+    user.lastName.length < 1 && (errorList.lastName = 'You must enter your last name.')
+    user.email.length < 1 && (errorList.email = 'You must enter an email address.')
+    user.password.length < 8 && (errorList.password = 'Your password must be at least 8 characters.')
+    user.password !== this.state.passwordConfirm && (errorList.passwordConfirm = 'Passwords do not match.')
 
-    user.firstName.length < 1 && errors.push({id: 1, message: 'You must enter your first name.'})
-    user.lastName.length < 1 && errors.push({id: 2, message: 'You must enter your last name.'})
-    user.email.length < 1 && errors.push({id: 3, message: 'You must enter an email address.'})
-    user.password.length < 8 && errors.push({id: 4, message: 'Your password must be at least 8 characters.'})
-    user.password !== this.state.passwordConfirm && errors.push({id: 5, message: 'Passwords do not match.'})
-
-    if (errors.length == 0) {
-    apiRegister.addUser(user)
+    if (Object.keys(errorList).length === 0) {
+    addUser(user)
       .then(result => {
-        result.success ? this.userCreated(result.message.id) : errors.push({id: 6, message: result.message.error})
-        this.setState({ errors })
+        if (result.success) {
+          this.userCreated(result.message.id)
+        } else {
+          errorList.email = result.message.error
+          this.setState({ errorList })
+        }     
       })
-    } else {
-      this.setState({ errors })
+  } else {
+      this.setState({ errorList })
     }
   }
 
@@ -51,20 +55,27 @@ export default class RegisterUser extends React.Component {
   }
 
   render () {
+    const err = this.state.errorList
     return (
       <div id='reg-user'>
-        <h3>[RegisterUser]</h3>
-        <div id='reg-user-form'>
-          <label>First Name</label><br /><input name='firstName' onChange={this.handleChange} /> <br />
-          <label>Last Name</label><br /><input name='lastName' onChange={this.handleChange} /> <br />
-          <label>Email</label><br /><input name='email' onChange={this.handleChange} /> <br />
-          <label>Password</label><br /><input name='password' type='password' onChange={this.handleChange} /> <br />
-          <label>Confirm Password</label><br /><input name='passwordConfirm' type='password' onChange={this.handleChange} /> <br />
-          <div id='reg-errors'>
-            {this.state.errors.map(x => <p key={x.id}>{x.message}</p>)}
-          </div>
+          <h2>Register as a new user</h2>
+          <ul className='reg-form'>
+            <li><label>First Name<span className='errmsg'>{err.firstName}</span></label>
+            <input name='firstName' onChange={this.handleChange} autocomplete="off" /> <br /></li>
+
+            <li><label>Last Name<span className='errmsg'>{err.lastName}</span></label>
+            <input name='lastName' onChange={this.handleChange} autocomplete="off" /> <br /></li>
+
+            <li><label>Email<span className='errmsg'>{err.email}</span></label>
+            <input name='email' onChange={this.handleChange} autocomplete="off" /> <br /></li>
+            
+            <li><label>Password<span className='errmsg'>{err.password}</span></label>
+            <input name='password' type='password' onChange={this.handleChange} autocomplete="off" /> <br /></li>
+
+            <li><label>Confirm Password<span className='errmsg'>{err.passwordConfirm}</span></label>
+            <input name='passwordConfirm' type='password' onChange={this.handleChange} autocomplete="off" /> <br /></li>
+        </ul>
           <button onClick={this.handleSubmit}>Submit</button>
-        </div>
       </div>
     )
   }
