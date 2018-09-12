@@ -10,24 +10,30 @@ export default class Register extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      userId: 0
+      userId: 0,
+      stage: 0
     }
   }
 
   callbackUser = (id) => {
-    this.setState({userId: id})
+    this.setState({
+      userId: id,
+      stage: 1
+    })
   }
 
-  callbackOrg = (o) => {
-    console.log(o)
+  callbackOrg = () => {
+    this.setState({
+      stage: 2
+    })
   }
 
   render () {
     return (
-      <div>
-        <h2>[Register]</h2>
-        {this.state.userId == 0 && <RegisterUser callback={this.callbackUser} />}
-        {this.state.userId && <RegisterOrg callback={this.callbackOrg} />}
+      <div id='reg-container'>
+        {this.state.stage == 0 && <RegisterUser callback={this.callbackUser} />}
+        {this.state.stage == 1 && <RegisterOrg callback={this.callbackOrg} userId={this.state.userId} />}
+        {this.state.stage == 2 && this.props.callback('home')}
       </div>
     )
   }
