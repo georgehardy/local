@@ -1,18 +1,163 @@
+/* * {
+  outline: 1px solid #947676 !important;
+  box-sizing: border-box;
+} */
+
+#main {
+  display: flex;
+  flex-flow: wrap;
+  border
+}
+
+#sidebar {
+  flex: 1;
+  background-color: white;
+}
+
+#mainmap {
+  flex: 4;
+  flex-direction: row;
+}
+
+
+
 #regmap .leaflet-container {
   height: 400px;
   width: 100%;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+#mainmap .leaflet-container {
+  height: 850px;
+  width: 100%;
+  margin: 0;
+}
+
+body {
+  background-color: rgb(165, 190, 187);
+  color: black;
+  font-family: 'Cabin', sans-serif;
+}
+
+#header {
+  background-color: #ED6A5A;
+  padding: 0rem;
+  border-bottom: 2px solid #474343;
+}
+
+#header a {
+  text-decoration: none;
+  color: white;
+}
+
+#logo {
+  margin-left: 2rem;
+  font-size: 4rem;
+  color: #fff;
+  font-weight: 900;
+}
+
+#login-status {
+  float: right;
+  padding: 1.5rem;
+}
+
+.errmsg {
+  color: rgb(255, 0, 0);
+  padding-left: 15px;
+  font-style: italic;
+}
+
+#main {
+  margin-top: 1rem;
 }
 
 #reg-container {
   text-align: center;
+  margin-top: 6rem;
+  color: #474343;
+}
+
+#reg-container h2 {
+  padding-bottom: 2rem;
+}
+
+#reg-container button {
+  font-size: 2.5rem;
+  margin: 1rem;
+  padding: 2rem;
+  width: 30%;
+  background-color: rgb(241, 243, 240);
+  border: 1px solid #9b9797;
+  color: #474343;
+  outline: none;
+}
+
+#reg-container button:active {
+  border: 1px solid #474343;
+  background-color: rgb(218, 218, 218);
+}
+
+.reg-form ul, li, input, label {
+  box-sizing: border-box;
+  display: block;
+  font-family: sans-serif;
+}
+
+#reg-user, #reg-org, #box {
+  background-color: #E9EAE8;
+  border: 2px solid #474343;
+  list-style-type: none;
+  margin: auto;
+  width: 60%;
+  padding: 1rem 5rem 3rem 5rem;
+}
+
+.reg-form ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.reg-form li {
+  margin-top: -1px;
+  position: relative;
+}
+
+.reg-form label, input {
+  transition: color 0.4s ease, background-color 0.2s ease-in-out;
+}
+
+.reg-autocomplete {
+  font-size: 1.5em;
+  text-align: left;
+}
+
+.reg-autocomplete a {
+  color: #456990;
+}
+
+.reg-form label {
+  color:rgb(165, 190, 187);
+  letter-spacing: 0.03em;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+}
+
+.reg-form input {
+  background-color: rgb(241, 243, 240);
+  border: 1px solid #9b9797;
+  color: #474343;
   font-size: 3rem;
+  padding: 1em 10px 10px 10px;
+  outline: none;
+  width: 100%;
+}
+.reg-form input:focus {
+  color: #000;
+  background-color: rgb(255, 255, 255);
+  box-shadow: 0px 3px 4px -2px rgba(0, 0, 115, 0.25) inset;
 }
 
-#reg-container input {
-  font-size: 5rem;
-  width: 80%;
-  text-align: center;
-}
 
-#reg-form {
-}
